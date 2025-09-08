@@ -6,6 +6,8 @@ import factory.ConnectionManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import dao.ClienteDAO;
+
 public class MySQLDAOFactory extends AbstractFactory {
 
     private static MySQLDAOFactory instance = null;
@@ -27,6 +29,15 @@ public class MySQLDAOFactory extends AbstractFactory {
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
         return ConnectionManager.getConnection(DRIVER, DBURL, USER, PASSWORD);
+    }
+
+    @Override
+    public ClienteDAO getClienteDAO() {
+        try {
+            return new MySQLClienteDAO(getConnection());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

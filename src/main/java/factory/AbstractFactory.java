@@ -1,15 +1,18 @@
 package factory;
 
+import dao.ClienteDAO;
 import mysql.MySQLDAOFactory;
 
 public abstract class AbstractFactory {
     public static final int MYSQL_JDBC = 1;
     public static final int DERBY_JDBC = 2;
 
+    public abstract ClienteDAO getClienteDAO();
+    // public abstract FacturaDAO getFacturaDAO();
+    // public abstract FacturaProductoDAO getFacturaProductoDAO();
+    // public abstract ProductoDAO getProductoDAO();
+
     //Aca irian los DAOs abstractos
-
-    private static AbstractFactory instance;
-
     public static AbstractFactory getFactory(int type) {
         switch (type) {
             case MYSQL_JDBC:
@@ -20,7 +23,6 @@ public abstract class AbstractFactory {
                 return null;
         }
     }
-
 
     /*Esto seria con el singleton pero no lo pude hacer andar todavia
     public static AbstractFactory getDAOFactory(int whichFactory) {
