@@ -1,5 +1,7 @@
 package factory;
 
+import mysql.MySQLDAOFactory;
+
 public abstract class AbstractFactory {
     public static final int MYSQL_JDBC = 1;
     public static final int DERBY_JDBC = 2;

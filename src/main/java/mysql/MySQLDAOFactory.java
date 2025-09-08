@@ -1,9 +1,12 @@
-package factory;
+package mysql;
+
+import factory.AbstractFactory;
+import factory.ConnectionManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class MySQLDAOFactory extends AbstractFactory{
+public class MySQLDAOFactory extends AbstractFactory {
 
     private static MySQLDAOFactory instance = null;
 

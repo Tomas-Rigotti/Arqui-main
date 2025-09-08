@@ -1,16 +1,10 @@
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import factory.MySQLDAOFactory;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
+import mysql.MySQLDAOFactory;
 
 import static utils.BaseDeDatos.createSchema;
 import static utils.CargaDatosIniciales.loadData;
