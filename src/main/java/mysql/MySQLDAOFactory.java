@@ -1,5 +1,6 @@
 package mysql;
 
+import dao.ProductoDAO;
 import factory.AbstractFactory;
 import factory.ConnectionManager;
 
@@ -35,6 +36,15 @@ public class MySQLDAOFactory extends AbstractFactory {
     public ClienteDAO getClienteDAO() {
         try {
             return new MySQLClienteDAO(getConnection());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public ProductoDAO getProductoDAO() {
+        try {
+            return new MySQLProductoDAO(getConnection());
         } catch (Exception e) {
             return null;
         }

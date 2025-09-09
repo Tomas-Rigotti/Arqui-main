@@ -12,7 +12,7 @@ import dto.ClienteDTO;
 import entity.Cliente;
 
 public class MySQLClienteDAO implements ClienteDAO {
-    private Connection conn;
+    private final Connection conn;
 
     public MySQLClienteDAO(Connection conn) {
         this.conn = conn;

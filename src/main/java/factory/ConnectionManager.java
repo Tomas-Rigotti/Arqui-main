@@ -6,8 +6,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionManager {
+
     public static Connection getConnection(String DRIVER, String DBURL, String USER, String PASSWORD)
-            throws SQLException, ClassNotFoundException {
+            throws SQLException {
 
         try {
             Class.forName(DRIVER).getDeclaredConstructor().newInstance();
