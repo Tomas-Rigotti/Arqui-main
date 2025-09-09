@@ -1,10 +1,9 @@
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
-import mysql.MySQLDAOFactory;
+import dao.ClienteDAO;
+import dao.ProductoDAO;
+import factory.AbstractFactory;
+import mysql.*;
 
 import static utils.BaseDeDatos.createSchema;
 import static utils.CargaDatosIniciales.loadData;
@@ -26,14 +25,8 @@ import static utils.CargaDatosIniciales.loadData;
 // </dependencies>
 
 public class Main {
-    /*private static final String DB_URL = "jdbc:mysql://localhost:3306/Entregable1";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";*/
-
 
     public static void main(String[] args) {
-
-        //En el main faltaria pedir la instancia de la factory
         try {
             // 1. Crear el esquema de la base de datos
             createSchema();
@@ -45,12 +38,21 @@ public class Main {
 
             System.out.println("----------------------------------------");
 
-            // 3. Obtener el producto que más recaudó
-            findMostProfitableProduct();
+            //3. Elegir Base de datos (MySQL)
+            AbstractFactory MySQLFactory = AbstractFactory.getFactory(1);
+
+            //4. Obtener el DAO de producto y de cliente
+            assert MySQLFactory != null;
+            ProductoDAO MySQLProductoDAO = MySQLFactory.getProductoDAO();
+            ClienteDAO MySQLClienteDAO = MySQLFactory.getClienteDAO();
+
+            //5. Obtener el producto que más recaudó
+            System.out.println(MySQLProductoDAO.getProductoMasRecaudacion());
             System.out.println("----------------------------------------");
 
-            // 4. Imprimir la lista de clientes ordenada por facturación
-            listClientsByRevenue();
+            //6. Imprimir la lista de clientes ordenada por facturación
+            System.out.println(MySQLClienteDAO.getAllClienteDTOorderByFacturacion());
+            System.out.println("--------------------------------------");
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -59,14 +61,14 @@ public class Main {
         }
     }
 
-    //Esto iria en los DAOs, los metodos abstractos en las interfaces y la conexion en los DAOs de MySQL
-    //las pide en la FactoryMySQL, no se si deje bien la sintaxis de las consultas
 
+    //Todo esto no iria, lo dejo por las dudas
     /**
      * Retorna el producto que más recaudó.
      * @throws SQLException si ocurre un error en la consulta SQL.
      */
-    public static void findMostProfitableProduct() throws SQLException {
+
+    /*public static void findMostProfitableProduct() throws SQLException {
         String query = "SELECT p.nombre, SUM(fp.cantidad * p.valor) AS recaudacion "
                 + "FROM productos p "
                 + "JOIN facturas_productos fp ON p.id_producto = fp.id_producto "
@@ -74,7 +76,7 @@ public class Main {
                 + "ORDER BY recaudacion DESC "
                 + "LIMIT 1";
 
-        try{ /*(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);*/
+        try{ //(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
         Connection conn = MySQLDAOFactory.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query); {
@@ -97,7 +99,7 @@ public class Main {
      * Imprime una lista de clientes, ordenada por a cuál se le facturó más.
      * @throws SQLException si ocurre un error en la consulta SQL.
      */
-    public static void listClientsByRevenue() throws SQLException {
+    /*public static void listClientsByRevenue() throws SQLException {
         String query = "SELECT c.nombre, SUM(fp.cantidad * p.valor) AS total_facturado "
                 + "FROM clientes c "
                 + "JOIN facturas f ON c.id_cliente = f.id_cliente "
@@ -106,7 +108,7 @@ public class Main {
                 + "GROUP BY c.nombre "
                 + "ORDER BY total_facturado DESC";
 
-        try /*(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);*/{
+        try //(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);{
             Connection conn = MySQLDAOFactory.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query); {
@@ -123,5 +125,5 @@ public class Main {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 }

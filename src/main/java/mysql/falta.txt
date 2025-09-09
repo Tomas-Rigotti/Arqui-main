@@ -1,1 +1,0 @@
-DAOS de MySQL (implementando las interfaces)

@@ -12,8 +12,6 @@ public class BaseDeDatos {
     private static final String USER = "root";
     private static final String PASSWORD = "";*/
 
-
-
     /**
      * Crea las tablas en la base de datos.
      * @throws SQLException si ocurre un error en la conexión o consulta SQL.
@@ -55,9 +53,7 @@ public class BaseDeDatos {
             stmt.execute(createFacturasTable);
             stmt.execute(createFacturasProductosTable);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

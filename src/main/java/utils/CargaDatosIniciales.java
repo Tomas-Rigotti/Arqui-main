@@ -1,5 +1,6 @@
 package utils;
 
+import mysql.MySQLDAOFactory;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -7,23 +8,25 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CargaDatosIniciales {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/Entregable1";
+    /*private static final String DB_URL = "jdbc:mysql://localhost:3306/Entregable1";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "";*/
 
     /**
      * Carga los datos desde los archivos CSV a las tablas.
      * @throws SQLException si ocurre un error en la conexión o consulta SQL.
      * @throws IOException si ocurre un error al leer los archivos.
      */
-    public static void loadData() throws SQLException, IOException {
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+
+
+    public static void loadData() throws SQLException, IOException, ClassNotFoundException {
+        try /*(Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD))*/ {
+            Connection conn = MySQLDAOFactory.getConnection();
             // Cargar clientes.csv
             String insertClienteSQL = "INSERT INTO clientes (id_cliente, nombre) VALUES (?, ?)";
             loadCsv("clientes.csv", insertClienteSQL, conn, new int[]{1, 2});
@@ -39,6 +42,8 @@ public class CargaDatosIniciales {
             // Cargar facturas-productos.csv
             String insertFacturaProductoSQL = "INSERT INTO facturas_productos (id_factura, id_producto, cantidad) VALUES (?, ?, ?)";
             loadCsv("facturas-productos.csv", insertFacturaProductoSQL, conn, new int[]{1, 2, 3});
+        } catch (SQLException | ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
