@@ -1,4 +1,4 @@
-Ejercicio Integrador 1 - Arquitecturas Web
+Ejercicio Integrador 1 - Arquitectura Web
 
 👥 Integrantes
 
