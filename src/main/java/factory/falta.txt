@@ -1,2 +1,0 @@
-Fabrica de DAO generica (con lo del singleton)
-Manager de conexiones 
